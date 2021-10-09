@@ -11,6 +11,10 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 
+app.get('/', (req, res) => {
+    res.send('Home Page');
+})
+
 process.once('SIGUSR2', function () {
     process.kill(process.pid, 'SIGUSR2');
 });
@@ -21,7 +25,7 @@ process.on('SIGINT', function () {
 });
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log('Listening on port 3000...');
+    console.log(`Listening on port ${ PORT }...`);
 });

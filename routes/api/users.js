@@ -12,9 +12,9 @@ router.get('/', (req, res) => {
     res.send('user route');
 })
 .post('/', // register user 
-    check('username', 'username cannot be empty').not().isEmpty(),
-    check('email', 'please enter a valid email').isEmail(),
-    check('password', 'password length must be euqal or greater than 6').isLength({ min: 6 }),
+    check('username', '用户名不能为空').notEmpty(),
+    check('email').notEmpty().withMessage('邮箱不能为空').isEmail().withMessage('请输入有效邮箱'),
+    check('password', '密码长度需不少于6个字符').isLength({ min: 6 }),
     async (req, res) => { 
         // 0. validate req.body data
         const errors = validationResult(req);
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
                 // 1. check if user already exists
                 let user = await User.findOne({ email: email });
                 if (user) {
-                    return res.status(400).json({errors: [ { msg: 'User already exists!' } ]})
+                    return res.status(400).json({errors: [ { msg: '用户已经存在!' } ]})
                 }
                 // 2. create user and save
                 const avatar = gravatar.url(email, {
