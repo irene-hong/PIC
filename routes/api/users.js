@@ -51,17 +51,13 @@ router.post(
             id: user._id,
           },
         };
-        jwt.sign(
-          payload,
-          config.get("jwtSecret"),
-          { expiresIn: 60 * 60 },
-          (err, token) => {
-            if (err) {
-              throw err;
-            }
-            return res.json({ token });
+        const secret = process.env.jwtSecret || config.get("jwtSecret");
+        jwt.sign(payload, secret, { expiresIn: 60 * 60 }, (err, token) => {
+          if (err) {
+            throw err;
           }
-        );
+          return res.json({ token });
+        });
 
         // res.send("registration success!");
       } catch (e) {
