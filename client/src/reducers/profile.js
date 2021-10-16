@@ -9,7 +9,7 @@ import {
 const initialState = {
   profile: null,
   profiles: [], // profile list
-  repos: [],
+  user: null,
   loading: true,
   error: [],
 };
@@ -41,7 +41,7 @@ export default function profile(state = initialState, action) {
       return {
         ...state,
         profile: null,
-        repos: [],
+        user: null,
         loading: false,
       };
     default:

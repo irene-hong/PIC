@@ -16,12 +16,12 @@ const Profile = ({ getProfileById, profile, auth, loading, match }) => {
 
   return (
     <Fragment>
-      {profile === null || loading === true ? (
+      {profile === null || loading ? (
         <Spinner />
       ) : (
         <Fragment>
           <Link to="/profiles" className="btn btn-primary">
-            系友广场
+            所有系友
           </Link>
           {auth.isAuthenticated &&
             !auth.loading &&

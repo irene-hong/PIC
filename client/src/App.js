@@ -8,6 +8,7 @@ import Landing from "./components/layout/Landing";
 import Alert from "./components/layout/Alert";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import { CLEAR_PROFILE, LOGOUT } from "./actions/types";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/profile-forms/CreateProfile";
 import EditProfile from "./components/profile-forms/EditProfile";
@@ -26,12 +27,19 @@ import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./actions/auth";
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
 const App = () => {
   useEffect(() => {
+    if (localStorage.token) {
+      console.log("here");
+      setAuthToken(localStorage.token);
+    }
     store.dispatch(loadUser());
+    window.addEventListener("storage", () => {
+      if (!localStorage.token) {
+        store.dispatch({ type: CLEAR_PROFILE });
+        store.dispatch({ type: LOGOUT });
+      }
+    });
   }, []);
 
   return (

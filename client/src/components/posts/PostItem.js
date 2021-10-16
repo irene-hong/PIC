@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { formatDateV2 } from "../../utils/formatDate";
 import { addLike, removeLike, deletePost } from "../../actions/post";
 
 const PostItem = ({
@@ -13,14 +14,18 @@ const PostItem = ({
 }) => {
   return (
     <div className="post bg-white p-1 my-1">
-      <Link to={`/profile/${user}`} className="post-title">
-        <p>{title}</p>
-        <p className="post-author">{username}</p>
-      </Link>
+      <div className="post-title">
+        <Link to={`/posts/${_id}`}>
+          <p>{title}</p>
+        </Link>
+        <Link to={`/profile/${user}`}>
+          <p className="post-author">{username}</p>
+        </Link>
+      </div>
 
       <div>
         <p>{content}</p>
-        <p className="post-date">发布于 {date}</p>
+        <p className="post-date">发布于 {formatDateV2(date)}</p>
         <button
           type="button"
           className="btn btn-light"

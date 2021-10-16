@@ -20,8 +20,6 @@ const initialState = {
 export default function post(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    // 注意前两个GET state中的post
-    // 一个是复数一个是单数
     case GET_POST:
       return {
         ...state,

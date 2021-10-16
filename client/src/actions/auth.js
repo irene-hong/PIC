@@ -12,7 +12,8 @@ import {
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 
-// load user
+// 加载用户
+// GET /api/auth
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -21,7 +22,7 @@ export const loadUser = () => async (dispatch) => {
     const res = await axios.get("/api/auth");
     dispatch({
       type: USER_LOADED,
-      payload: res.data, // user data
+      payload: res.data, // user object
     });
   } catch (error) {
     dispatch({
@@ -30,7 +31,8 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-// register
+// 注册用户
+// POST /api/users
 export const register =
   ({ username, email, password }) =>
   async (dispatch) => {
@@ -60,7 +62,8 @@ export const register =
     }
   };
 
-// log in
+// 登录
+// POST /api/auth
 export const login =
   ({ email, password }) =>
   async (dispatch) => {
@@ -93,7 +96,7 @@ export const login =
     }
   };
 
-// log out
+// 登出
 export const logout = () => (dispatch) => {
   dispatch({
     type: CLEAR_PROFILE,

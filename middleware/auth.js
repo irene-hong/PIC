@@ -1,20 +1,20 @@
-const jwt = require('jsonwebtoken');
-const config = require('config');
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
-// auth中间件的作用：获取req.header中的token，转换为用户的id并保存在req.user变量中
+// auth中间件：获取req.header中的token，通过jwt转换为用户id并保存在req.userid中
 
-module.exports = function(req, res, next) {
-    const token = req.header('x-auth-token');
-    if (!token) {
-        return res.status(401).json({ msg: 'No token, authorization denied' });
-    }
+module.exports = function (req, res, next) {
+  const token = req.header("x-auth-token");
+  if (!token) {
+    return res.status(401).json({ msg: "No token, authorization denied" });
+  }
 
-    try {
-        const decoded = jwt.verify(token, config.get('jwtSecret'));
-        req.userid = decoded.user.id; 
-        // store user id in req.userid
-        next();
-    } catch (error) {
-        res.status(401).json({ msg: 'Token is not valid!' });
-    }
-}
+  try {
+    const secrect = process.env.jwtSecret || config.get("jwtSecret");
+    const decoded = jwt.verify(token, secrect);
+    req.userid = decoded.user.id;
+    next();
+  } catch (error) {
+    return res.status(401).json({ msg: "Token无效!" });
+  }
+};
