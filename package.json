@@ -30,5 +30,8 @@
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.8"
+  },
+  "engines": {
+    "node": "14.17.6"
   }
 }
