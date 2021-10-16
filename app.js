@@ -13,20 +13,20 @@ app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/posts", require("./routes/api/posts"));
 
 if (process.env.NODE_ENV == "production") {
-  app.use(express.static("/client/build"));
+  app.use(express.static(path.join(__dirname, "client", "build")));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
 }
 
-process.once("SIGUSR2", function () {
-  process.kill(process.pid, "SIGUSR2");
-});
+// process.once("SIGUSR2", function () {
+//   process.kill(process.pid, "SIGUSR2");
+// });
 
-process.on("SIGINT", function () {
-  // this is only called on ctrl+c, not restart
-  process.kill(process.pid, "SIGINT");
-});
+// process.on("SIGINT", function () {
+//   // this is only called on ctrl+c, not restart
+//   process.kill(process.pid, "SIGINT");
+// });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -12,6 +12,7 @@ const bcrypt = require("bcryptjs");
 // GET api/auth
 router.get("/", auth, async (req, res) => {
   try {
+    console.log("received a request");
     const user = await User.findById(req.userid).select("-password");
     res.json(user);
     // res.send('auth route');
@@ -57,17 +58,13 @@ router.post(
             id: user._id,
           },
         };
-        jwt.sign(
-          payload,
-          config.get("jwtSecret"),
-          { expiresIn: 60 * 60 },
-          (err, token) => {
-            if (err) {
-              throw err;
-            }
-            return res.json({ token });
+        const secret = process.env.jwtSecret || config.get("jwtSecret");
+        jwt.sign(payload, secret, { expiresIn: 60 * 60 }, (err, token) => {
+          if (err) {
+            throw err;
           }
-        );
+          return res.json({ token });
+        });
       } catch (e) {
         console.log(e.message);
         res.status(500).send("Server error!");

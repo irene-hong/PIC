@@ -31,6 +31,7 @@ router.get("/", async (req, res) => {
       "username",
       "avatar",
     ]);
+    console.log(profiles);
     return res.json(profiles);
   } catch (error) {
     console.log(error.message);

@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
-// const config = require('config');
-const db =
-  process.env.DB_URL ||
-  "mongodb+srv://admin:hJmSvgvNLjmnEBlL@cluster0.2l656.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const config = require("config");
+const db = process.env.mongoURI || config.get("mongoURI");
 
 const connectDB = async () => {
   try {

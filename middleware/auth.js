@@ -6,12 +6,13 @@ const config = require("config");
 module.exports = function (req, res, next) {
   const token = req.header("x-auth-token");
   if (!token) {
+    console.log("no token");
     return res.status(401).json({ msg: "No token, authorization denied" });
   }
 
   try {
-    const secrect = process.env.jwtSecret || config.get("jwtSecret");
-    const decoded = jwt.verify(token, secrect);
+    const secret = process.env.jwtSecret || config.get("jwtSecret");
+    const decoded = jwt.verify(token, secret);
     req.userid = decoded.user.id;
     next();
   } catch (error) {
